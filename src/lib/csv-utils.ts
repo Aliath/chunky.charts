@@ -37,7 +37,7 @@ const parseCsvLines = (content: string, result: Float64Array, pointerIndex: numb
  * This allows for tracking the progress of the file reading process.
  */
 export const readCsvFile = (file: File, onProgress: (progressFraction: number) => void) => {
-  const CHUNK_SIZE = ONE_MB * 4;
+  const CHUNK_SIZE = ONE_MB;
 
   return new Promise<Float64Array>((resolve, reject) => {
     const result = new Float64Array(MAX_RECORDS * 2);
