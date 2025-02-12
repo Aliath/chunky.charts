@@ -2,41 +2,36 @@ import { useSetAtom } from 'jotai';
 import { useUploadedFile } from './use-uploaded-file';
 import { fileStatusAtom } from '@/state/atoms';
 
-const FILE_URL = './sample_dataset.csv';
+const FILE_URL = './sample_dataset.csv?' + Math.random();
 
 export const useUploadSampleFile = () => {
   const setUploadedFileStatus = useSetAtom(fileStatusAtom);
 
   const { processFile } = useUploadedFile();
 
-  const uploadSampleFile = () => {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', FILE_URL, true);
-    xhr.responseType = 'blob';
+  const uploadSampleFile = async () => {
+    const startTime = performance.now();
+    let frameId: number;
 
     setUploadedFileStatus({ status: 'downloading', progressFraction: 0 });
 
-    xhr.addEventListener('progress', (event) => {
-      if (event.lengthComputable) {
-        const progressFraction = event.loaded / event.total;
-        setUploadedFileStatus({ status: 'downloading', progressFraction });
-      }
-    });
+    // getting progress with XHR works only for the file metadata, we can fake it tho
+    const update = () => {
+      const elapsedTime = performance.now() - startTime;
+      const progressFraction = 1 - Math.E ** (-2.5 * (elapsedTime / 1000));
 
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        const file = new File([xhr.response], 'sample_dataset.csv');
-        processFile(file);
-      } else {
-        alert('Could not download file');
-      }
-    });
+      setUploadedFileStatus({ status: 'downloading', progressFraction: progressFraction });
+      frameId = requestAnimationFrame(update);
+    };
 
-    xhr.addEventListener('error', () => {
-      alert('Could not download file');
-    });
+    frameId = requestAnimationFrame(update);
 
-    xhr.send();
+    const response = await fetch(FILE_URL);
+    const blob = await response.blob();
+    const file = new File([blob], 'sample_dataset.csv');
+    cancelAnimationFrame(frameId);
+
+    return processFile(file);
   };
 
   return uploadSampleFile;
