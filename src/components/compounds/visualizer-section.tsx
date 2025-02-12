@@ -28,12 +28,22 @@ export function VisualizerSection() {
         </div>
       )}
 
-      {(uploadedFileStatus.status === 'downloading' || uploadedFileStatus.status === 'reading') && (
-        <div className="flex flex-auto items-center justify-center flex-col gap-4 text-sm text-neutral-500 capitalize">
-          <Progress className="max-w-[200px]" value={uploadedFileStatus.progressFraction * 100} />
-          {uploadedFileStatus.status} ({Math.round(uploadedFileStatus.progressFraction * 100)}%)...
-        </div>
-      )}
+      {(uploadedFileStatus.status === 'downloading' || uploadedFileStatus.status === 'reading') &&
+        (() => {
+          // not a IIFE fan while rendering components, but needed to quickly tweak it, duh
+
+          const progressValue =
+            uploadedFileStatus.status === 'downloading'
+              ? uploadedFileStatus.progressFraction / 2
+              : (1 + uploadedFileStatus.progressFraction) / 2;
+
+          return (
+            <div className="flex flex-auto items-center justify-center flex-col gap-4 text-sm text-neutral-500 capitalize">
+              <Progress className="max-w-[200px]" value={progressValue * 100} />
+              {uploadedFileStatus.status} ({Math.round(progressValue * 100)}%)...
+            </div>
+          );
+        })()}
 
       {uploadedFileStatus.status === 'loaded' && <DataChart />}
     </div>

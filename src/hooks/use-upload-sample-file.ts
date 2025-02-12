@@ -2,8 +2,7 @@ import { useSetAtom } from 'jotai';
 import { useUploadedFile } from './use-uploaded-file';
 import { fileStatusAtom } from '@/state/atoms';
 
-const FILE_URL =
-  'https://gist.githubusercontent.com/Aliath/d25ee989090b9c51d50e535d38f97152/raw/e591acd34c13d2d9099c321db8b6b11753b376c6/sample-data.csv';
+const FILE_URL = '/sample_dataset.csv';
 
 export const useUploadSampleFile = () => {
   const setUploadedFileStatus = useSetAtom(fileStatusAtom);
@@ -17,7 +16,7 @@ export const useUploadSampleFile = () => {
 
     xhr.addEventListener('progress', (event) => {
       if (event.lengthComputable) {
-        const progressFraction = (event.loaded / event.total) * 100;
+        const progressFraction = event.loaded / event.total;
         setUploadedFileStatus({ status: 'downloading', progressFraction });
       }
     });
