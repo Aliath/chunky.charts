@@ -2,7 +2,7 @@ import { useSetAtom } from 'jotai';
 import { useUploadedFile } from './use-uploaded-file';
 import { fileStatusAtom } from '@/state/atoms';
 
-const FILE_URL = '/sample_dataset.csv';
+const FILE_URL = './sample_dataset.csv';
 
 export const useUploadSampleFile = () => {
   const setUploadedFileStatus = useSetAtom(fileStatusAtom);
