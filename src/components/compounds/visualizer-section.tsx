@@ -23,7 +23,7 @@ export function VisualizerSection() {
             OR
           </div>
           <Button variant="outline" onClick={uploadSampleFile}>
-            <FlaskConical /> Use Sample File [256mb]
+            <FlaskConical /> Use Sample File [100mb]
           </Button>
         </div>
       )}
