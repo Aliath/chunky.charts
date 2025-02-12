@@ -14,6 +14,8 @@ export const useUploadSampleFile = () => {
     xhr.open('GET', FILE_URL, true);
     xhr.responseType = 'blob';
 
+    setUploadedFileStatus({ status: 'downloading', progressFraction: 0 });
+
     xhr.addEventListener('progress', (event) => {
       if (event.lengthComputable) {
         const progressFraction = event.loaded / event.total;
@@ -31,7 +33,7 @@ export const useUploadSampleFile = () => {
     });
 
     xhr.addEventListener('error', () => {
-      alert('Coult not download file');
+      alert('Could not download file');
     });
 
     xhr.send();
