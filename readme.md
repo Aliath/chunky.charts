@@ -2,6 +2,12 @@
 
 Big data? No problem. chunky.charts efficiently renders massive datasets by leveraging optimized data structures, smart downsampling, and caching. Designed for performance, it ensures smooth visualization even with hundreds of millions of points. 🚀
 
+
+https://github.com/user-attachments/assets/64a1e1e8-791d-444a-98d0-fbbc9827e1a3
+
+
+
+
 ## Requirements & Installation
 
 - make sure you're running Node.js version >= 22 (tested on this version)
@@ -13,7 +19,7 @@ Big data? No problem. chunky.charts efficiently renders massive datasets by leve
 
 - I assumed that the points are already sorted by x values, so x*n < x*(n+1)
 - performance and handling large datasets were my primary focus for data rendering
-- to avoid blocking the main thread, data is imported in 4MB chunks; this ensures a smooth experience (on my machine, loading 100 million points takes about 20 seconds)
+- to avoid blocking the main thread, data is imported in smalller chunks; this ensures a smooth experience (on my machine, loading 100 million points takes about 20 seconds)
 
 ## Key Implementation Highlights
 
