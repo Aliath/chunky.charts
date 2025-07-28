@@ -16,7 +16,7 @@ export const increaseValueAtom = atom(DEFAULT_INCREASE_VALUE);
 export const isPlayingAtom = atom(DEFAULT_IS_PLAYING);
 export const fileStatusAtom = atom<
   | { status: 'idle' }
-  | { status: 'downloading'; progressFraction: number }
+  | { status: 'generating'; progressFraction: number }
   | { status: 'reading'; file: File; progressFraction: number }
   | { status: 'loaded'; file: File; data: Float64Array }
 >({ status: 'idle' });
